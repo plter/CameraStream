@@ -8,6 +8,7 @@ class Main {
         this._videoInputDevices = new Map();
         this.VIDEO_WIDTH = 1280;
         this.VIDEO_HEIGHT = 720;
+        this.KEY_SELECTED_VIDEO_DEVICE_ID = "selectedVideoDeviceId";
 
         this.initUI();
 
@@ -23,13 +24,18 @@ class Main {
             }
         });
 
-        console.log(this._videoInputDevices);
-        if (this._videoInputDevices.size > 0) {
-            this.showVideo(this._videoInputDevices.values().next());
-
-            if (this._videoInputDevices.size > 1) {
-                this.addSelect(this._videoInputDevices);
+        if (this._videoInputDevices.size > 1) {
+            this.addSelect(this._videoInputDevices);
+            let storedDeviceId = localStorage.getItem(this.KEY_SELECTED_VIDEO_DEVICE_ID);
+            if (storedDeviceId) {
+                this.select.value = storedDeviceId
             }
+            let device = this._videoInputDevices.get(this.select.value);
+            if (device) {
+                this.showVideo(device);
+            }
+        } else if (this._videoInputDevices.size > 0) {
+            this.showVideo(this._videoInputDevices.values().next());
         } else {
             alert("没有找到摄像头");
         }
@@ -40,7 +46,7 @@ class Main {
      * @param {Map} devices
      */
     addSelect(devices) {
-        let select = document.createElement("select");
+        let select = this.select = document.createElement("select");
         select.style.position = "fixed";
         select.style.left = "0";
         select.style.top = "0";
@@ -53,6 +59,7 @@ class Main {
         });
         select.onchange = e => {
             this.showVideo(this._videoInputDevices.get(select.value));
+            localStorage.setItem(this.KEY_SELECTED_VIDEO_DEVICE_ID, select.value);
         };
     }
 
