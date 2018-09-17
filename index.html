@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Camera stream</title>
+
 </head>
 <body style="margin: 0;overflow: hidden;">
-<video id="view" autoplay></video>
+<div id="root-container">
+    <div id="controls-container">
+        <button id="btn-rotate">旋转 180°</button>
+    </div>
+    <video id="view" autoplay style="flex: 1;"></video>
+</div>
 <script>
     // You can also require other files to run in this process
     require('./renderer.js');

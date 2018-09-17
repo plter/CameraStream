@@ -9,6 +9,7 @@ class Main {
         this.VIDEO_WIDTH = 1280;
         this.VIDEO_HEIGHT = 720;
         this.KEY_SELECTED_VIDEO_DEVICE_ID = "selectedVideoDeviceId";
+        this._viewRotation = 0;
 
         this.initUI();
 
@@ -47,10 +48,6 @@ class Main {
      */
     addSelect(devices) {
         let select = this.select = document.createElement("select");
-        select.style.position = "fixed";
-        select.style.left = "0";
-        select.style.top = "0";
-        document.body.appendChild(select);
         devices.forEach((value, key) => {
             let op = document.createElement("option");
             op.innerHTML = value.label;
@@ -61,18 +58,28 @@ class Main {
             this.showVideo(this._videoInputDevices.get(select.value));
             localStorage.setItem(this.KEY_SELECTED_VIDEO_DEVICE_ID, select.value);
         };
+        this._controlsContriner.appendChild(select);
     }
 
     initUI() {
         this._view = document.querySelector("#view");
+        this._controlsContriner = document.querySelector("#controls-container");
+        this._rootContainer = document.querySelector("#root-container");
+        this._btnRotate90 = document.querySelector("#btn-rotate");
+        this._btnRotate90.onclick = e => {
+            this._viewRotation += 180;
+            this._view.style.transform = `rotate(${this._viewRotation}deg)`;
+        };
 
         this.windowResizeHandler();
         window.onresize = this.windowResizeHandler.bind(this);
     }
 
     windowResizeHandler() {
+        this._rootContainer.style.width = window.innerWidth + "px";
+        this._rootContainer.style.height = window.innerHeight + "px";
         this._view.width = window.innerWidth;
-        this._view.height = window.innerHeight;
+        this._view.height = window.innerHeight - 20;
     }
 
     /**
