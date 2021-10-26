@@ -96,7 +96,7 @@ class Main {
                 height: this.VIDEO_HEIGHT
             }
         });
-        this._view.src = URL.createObjectURL(stream);
+        this._view.srcObject = stream;
     }
 }
 

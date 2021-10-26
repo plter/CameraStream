@@ -4,7 +4,8 @@
   "description": "Camera stream",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-builder"
   },
   "repository": "https://github.com/plter/CameraStream",
   "keywords": [
@@ -13,6 +14,7 @@
   "author": "plter",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^2.0.8"
+    "electron": "^15.3.0",
+    "electron-builder": "^22.13.1"
   }
 }
